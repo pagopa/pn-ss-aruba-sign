@@ -27,7 +27,6 @@ import static org.springframework.http.MediaType.APPLICATION_XML_VALUE;
 
 @Service("arubaProviderService")
 @CustomLog
-@Lazy
 public class ArubaSignProviderService implements PnSignService {
 
     private final ArubaSignService arubaSignService;
