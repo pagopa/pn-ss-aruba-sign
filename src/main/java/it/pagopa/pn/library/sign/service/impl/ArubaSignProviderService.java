@@ -5,10 +5,9 @@ import it.pagopa.pn.library.exceptions.PnSpapiTemporaryErrorException;
 import it.pagopa.pn.library.sign.exception.aruba.ArubaSignException;
 import it.pagopa.pn.library.sign.pojo.PnSignDocumentResponse;
 import it.pagopa.pn.library.sign.service.PnSignService;
-import it.pagopa.pnss.transformation.wsdl.*;
+import it.pagopa.pn.transformation.wsdl.*;
 import lombok.CustomLog;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 import reactor.core.publisher.MonoSink;
@@ -22,7 +21,7 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
 import static it.pagopa.pn.library.sign.utils.PnSignLogUtils.*;
-import static it.pagopa.pnss.transformation.wsdl.XmlSignatureType.XMLENVELOPED;
+import static it.pagopa.pn.transformation.wsdl.XmlSignatureType.XMLENVELOPED;
 import static org.springframework.http.MediaType.APPLICATION_XML_VALUE;
 
 @Service("arubaProviderService")

@@ -23,6 +23,30 @@
        	</dependency>
 
 		<dependency>
+			<groupId>it.pagopa.pn</groupId>
+			<artifactId>pn-commons</artifactId>
+			<version>2.2.4</version>
+			<exclusions>
+				<exclusion>
+					<groupId>it.pagopa.tech.lollipop-consumer-java-sdk</groupId>
+					<artifactId>core</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>it.pagopa.tech.lollipop-consumer-java-sdk</groupId>
+					<artifactId>http-verifier</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>it.pagopa.tech.lollipop-consumer-java-sdk</groupId>
+					<artifactId>assertion-rest-client-native</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>it.pagopa.tech.lollipop-consumer-java-sdk</groupId>
+					<artifactId>identity-service-rest-client-native</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<scope>provided</scope>
@@ -101,6 +125,18 @@
 			<artifactId>rt</artifactId>
 			<version>2.3.1</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>io.projectreactor</groupId>
+			<artifactId>reactor-test</artifactId>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 	
 	<build>
@@ -132,7 +168,7 @@
 										<extraarg>-client</extraarg>
 										<extraarg>-verbose</extraarg>
 										<extraarg>-p</extraarg>
-										<extraarg>it.pagopa.pnss.transformation.wsdl</extraarg>
+										<extraarg>it.pagopa.pn.transformation.wsdl</extraarg>
 										<extraarg>-asyncMethods</extraarg>
 										<extraarg>-bareMethods</extraarg>
 									</extraargs>

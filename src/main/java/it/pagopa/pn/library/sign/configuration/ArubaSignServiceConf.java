@@ -1,7 +1,7 @@
 package it.pagopa.pn.library.sign.configuration;
 
-import it.pagopa.pnss.transformation.wsdl.ArubaSignService;
-import it.pagopa.pnss.transformation.wsdl.ArubaSignServiceService;
+import it.pagopa.pn.transformation.wsdl.ArubaSignService;
+import it.pagopa.pn.transformation.wsdl.ArubaSignServiceService;
 import lombok.CustomLog;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
 import org.springframework.beans.factory.annotation.Value;
