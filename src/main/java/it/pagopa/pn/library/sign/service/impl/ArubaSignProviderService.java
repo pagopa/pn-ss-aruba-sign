@@ -66,6 +66,8 @@ public class ArubaSignProviderService implements PnSignService {
 
     private final Long arubaSignTimeout;
 
+    private static final String REQUEST_TIMEOUT = "Request timeout.";
+
     private static final UnaryOperator<Mono<SignReturnV2>> CHECK_IF_RESPONSE_IS_OK = f -> f.handle((signRequestV2, sink) -> {
         if (signRequestV2.getStatus().equals("KO")) {
             sink.error(new ArubaSignException());
@@ -143,7 +145,7 @@ public class ArubaSignProviderService implements PnSignService {
                 .cast(PdfsignatureV2Response.class)
                 .map(PdfsignatureV2Response::getReturn)
                 .transform(CHECK_IF_RESPONSE_IS_OK)
-                .timeout(Duration.ofSeconds(arubaSignTimeout), Mono.error(new ArubaSignException("Request timeout.")))
+                .timeout(Duration.ofSeconds(arubaSignTimeout), Mono.error(new ArubaSignException(REQUEST_TIMEOUT)))
                 .doOnNext(result -> log.info(CLIENT_METHOD_RETURN, ARUBA_SIGN_PDF_DOCUMENT, Stream.of(result.getStatus(), result.getReturnCode(), result.getDescription()).toList()))
                 .map(signReturnV2 -> {
                     PnSignDocumentResponse pnSignDocumentResponse = new PnSignDocumentResponse();
@@ -159,7 +161,7 @@ public class ArubaSignProviderService implements PnSignService {
 
         return Mono.fromCallable(() -> {
                     var signRequestV2 = createAuthenticatedSignRequestV2();
-                    signRequestV2.setStream(new DataHandler((DataSource) XMLMessage.createDataSource(APPLICATION_XML_VALUE,
+                    signRequestV2.setStream(new DataHandler( XMLMessage.createDataSource(APPLICATION_XML_VALUE,
                             new ByteArrayInputStream(fileBytes))));
                     signRequestV2.setTransport(TypeTransport.STREAM);
                     signRequestV2.setRequiredmark(timestamping);
@@ -179,7 +181,7 @@ public class ArubaSignProviderService implements PnSignService {
                 .cast(XmlsignatureResponse.class)
                 .map(XmlsignatureResponse::getReturn)
                 .transform(CHECK_IF_RESPONSE_IS_OK)
-                .timeout(Duration.ofSeconds(arubaSignTimeout), Mono.error(new ArubaSignException("Request timeout.")))
+                .timeout(Duration.ofSeconds(arubaSignTimeout), Mono.error(new ArubaSignException(REQUEST_TIMEOUT)))
                 .doOnNext(result -> log.info(CLIENT_METHOD_RETURN, ARUBA_SIGN_XML_DOCUMENT, Stream.of(result.getStatus(), result.getReturnCode(), result.getDescription()).toList()))
                 .map(signReturnV2 -> {
                     PnSignDocumentResponse pnSignDocumentResponse = new PnSignDocumentResponse();
@@ -211,7 +213,7 @@ public class ArubaSignProviderService implements PnSignService {
                 .cast(Pkcs7SignV2Response.class)
                 .map(Pkcs7SignV2Response::getReturn)
                 .transform(CHECK_IF_RESPONSE_IS_OK)
-                .timeout(Duration.ofSeconds(arubaSignTimeout), Mono.error(new ArubaSignException("Request timeout.")))
+                .timeout(Duration.ofSeconds(arubaSignTimeout), Mono.error(new ArubaSignException(REQUEST_TIMEOUT)))
                 .doOnNext(result -> log.info(CLIENT_METHOD_RETURN, ARUBA_PKCS_7_SIGNATURE, Stream.of(result.getStatus(), result.getReturnCode(), result.getDescription()).toList()))
                 .map(signReturnV2 -> {
                     PnSignDocumentResponse pnSignDocumentResponse = new PnSignDocumentResponse();
