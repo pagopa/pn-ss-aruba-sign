@@ -83,7 +83,6 @@
 			<version>2.3.1</version>
 		</dependency>
 
-
 		<dependency>
 			<groupId>org.apache.cxf.systests</groupId>
 			<artifactId>cxf-systests-transport-hc5</artifactId>
