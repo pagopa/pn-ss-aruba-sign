@@ -1,6 +1,6 @@
 package it.pagopa.pn.library.sign.service.impl;
 
-import com.sun.xml.ws.encoding.xml.XMLMessage;
+//import com.sun.xml.ws.encoding.xml.XMLMessage;
 import it.pagopa.pn.library.exceptions.PnSpapiTemporaryErrorException;
 import it.pagopa.pn.library.sign.exception.aruba.ArubaSignException;
 import it.pagopa.pn.library.sign.pojo.PnSignDocumentResponse;
@@ -8,6 +8,7 @@ import it.pagopa.pn.library.sign.service.PnSignService;
 import it.pagopa.pnss.transformation.wsdl.*;
 import jakarta.activation.DataHandler;
 import jakarta.activation.DataSource;
+import jakarta.mail.util.ByteArrayDataSource;
 import jakarta.xml.ws.Response;
 import lombok.CustomLog;
 import org.springframework.beans.factory.annotation.Value;
@@ -158,8 +159,8 @@ public class ArubaSignProviderService implements PnSignService {
 
         return Mono.fromCallable(() -> {
                     var signRequestV2 = createAuthenticatedSignRequestV2();
-                    signRequestV2.setStream(new DataHandler((DataSource) XMLMessage.createDataSource(APPLICATION_XML_VALUE,
-                            new ByteArrayInputStream(fileBytes))));
+                    DataSource source = new ByteArrayDataSource(fileBytes, APPLICATION_XML_VALUE);
+                    signRequestV2.setStream(new DataHandler(source));
                     signRequestV2.setTransport(TypeTransport.STREAM);
                     signRequestV2.setRequiredmark(timestamping);
                     return signRequestV2;
